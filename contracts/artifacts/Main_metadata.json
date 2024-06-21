@@ -1,10 +1,133 @@
 {
 	"compiler": {
-		"version": "0.8.19+commit.7dd6d404"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
-		"abi": [],
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "enum Main.Role",
+						"name": "_role",
+						"type": "uint8"
+					}
+				],
+				"name": "addUser",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "changeOwner",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "contractAuthor",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_userAddress",
+						"type": "address"
+					}
+				],
+				"name": "deleteUser",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_userAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "enum Main.Role",
+						"name": "_role",
+						"type": "uint8"
+					}
+				],
+				"name": "setUserRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "users",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "enum Main.Role",
+						"name": "role",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
 		"devdoc": {
 			"kind": "dev",
 			"methods": {},
@@ -20,7 +143,7 @@
 		"compilationTarget": {
 			"contracts/Main.sol": "Main"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "cancun",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -33,11 +156,11 @@
 	},
 	"sources": {
 		"contracts/Main.sol": {
-			"keccak256": "0x887033940e5daf002e29016f1f18f3cc81a6f19716a00ef5881e8e1e20b50e5a",
+			"keccak256": "0x2349abebce1941a94510c5c0c332e4ddccf478203f20a0bb7e24364d4b71b4e3",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://c59e5fd3d3ba4fdc16b36c484a7019541ebce88646e94a0d480462252e4cfafb",
-				"dweb:/ipfs/QmV7KJGP1576iQjHd6bi6HgqMMovJco6EWFEHRVvW3EjPJ"
+				"bzz-raw://651cd7e59fe25b149a92eff7f9fd08e6de9e61f158c86706b8e118c4598fd071",
+				"dweb:/ipfs/QmUErrGR3H2fiPh8Qwc9NQsgFMqHJpmGKpcXtpRihmMVx7"
 			]
 		}
 	},

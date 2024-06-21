@@ -3,6 +3,8 @@
 pragma solidity ^0.7.0;
 
 contract Album{
+
+
     struct musicAlbum{
         string artist;
         string albumTitle;

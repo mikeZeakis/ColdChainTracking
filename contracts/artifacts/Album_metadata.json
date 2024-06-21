@@ -240,11 +240,11 @@
 	},
 	"sources": {
 		"contracts/testContractAlbum.sol": {
-			"keccak256": "0xc4185a5401b5a8e9fb9650cdf70569a4c73f54a0d0da0ef30639f7a1737cfd11",
+			"keccak256": "0x7a39cf8f6cd0ecde2ed30e44aad35abd862d1b10070f50230669f94d65c60187",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://55274d724bfa8bade3f2f1691b3562cc5680100ac3a2260e15970d6f480fe5d6",
-				"dweb:/ipfs/QmS9QvnYRr7epFvcRxhdajVrp3nVhCH9KVBUVoLcumtE8i"
+				"bzz-raw://dfc7dcaa241017f79e199c39684785351b97287a98dc84843e78fbcbff1ba043",
+				"dweb:/ipfs/Qma4oaXuY5b1emc4w2m8T3LGsS7ry1caagmwagmRBqJLBC"
 			]
 		}
 	},
