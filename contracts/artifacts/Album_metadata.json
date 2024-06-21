@@ -1,0 +1,252 @@
+{
+	"compiler": {
+		"version": "0.7.6+commit.7338295f"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "albumEvent_Description",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "albumEvent_Artist",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "albumEvent_albumTitle",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "albumEvent_tracks",
+						"type": "uint256"
+					}
+				],
+				"name": "albumEvent",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "_Dexcription",
+						"type": "string"
+					}
+				],
+				"name": "errorEvent",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "contractAuthor",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "currentAlbum",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "artist",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "albumTitle",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tracks",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getCurrentAlbum",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getUsersFavouriteAlbum",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_artist",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_albumTitle",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_tracks",
+						"type": "uint256"
+					}
+				],
+				"name": "setAlbum",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_artist",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_albumTitle",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_tracks",
+						"type": "uint256"
+					}
+				],
+				"name": "setUsersFavouriteAlbum",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "userAlbums",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "artist",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "albumTitle",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tracks",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/testContractAlbum.sol": "Album"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/testContractAlbum.sol": {
+			"keccak256": "0xc4185a5401b5a8e9fb9650cdf70569a4c73f54a0d0da0ef30639f7a1737cfd11",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://55274d724bfa8bade3f2f1691b3562cc5680100ac3a2260e15970d6f480fe5d6",
+				"dweb:/ipfs/QmS9QvnYRr7epFvcRxhdajVrp3nVhCH9KVBUVoLcumtE8i"
+			]
+		}
+	},
+	"version": 1
+}
