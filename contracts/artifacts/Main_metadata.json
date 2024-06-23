@@ -74,6 +74,31 @@
 			},
 			{
 				"inputs": [],
+				"name": "getAllUsers",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "enum Main.Role",
+								"name": "role",
+								"type": "uint8"
+							}
+						],
+						"internalType": "struct Main.User[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "owner",
 				"outputs": [
 					{
@@ -101,6 +126,25 @@
 				"name": "setUserRole",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "userAddresses",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -156,11 +200,11 @@
 	},
 	"sources": {
 		"contracts/Main.sol": {
-			"keccak256": "0x2349abebce1941a94510c5c0c332e4ddccf478203f20a0bb7e24364d4b71b4e3",
+			"keccak256": "0x0b15e3bb5e58588d88e25d9901a4d3b551a9d09d571c92b4af02a35862c18361",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://651cd7e59fe25b149a92eff7f9fd08e6de9e61f158c86706b8e118c4598fd071",
-				"dweb:/ipfs/QmUErrGR3H2fiPh8Qwc9NQsgFMqHJpmGKpcXtpRihmMVx7"
+				"bzz-raw://60c09068d6d4bea584b9b094ba81aaf4860f0a12878959d962dc48f6f848a4e7",
+				"dweb:/ipfs/QmRzqTHxSshEpeenpyPyFEA32sVNknCgYRuEtNKfPJBZcY"
 			]
 		}
 	},

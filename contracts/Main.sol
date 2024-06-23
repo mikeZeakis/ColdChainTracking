@@ -10,7 +10,7 @@ contract Main{
 
 
     //ENUMS
-    enum Role {Admin, Supplier, DistributionEmployee, Auditor}
+    enum Role {None, Admin, Supplier, DistributionEmployee, Auditor}
       //me thn seira poy ta vlepeis -->
     enum Entity {Producer, Transporter, Warehouse, PackagingCompany, DistributionCompany }
 
@@ -38,7 +38,6 @@ contract Main{
         uint amount;
         string description;
         transportationInfo transInfo;
-
     }
 
     //EVENTS 
@@ -58,6 +57,7 @@ contract Main{
     //mapping(uint => Product) public products;
     //users address -> user (0x987342917237 -> ['GIANNIS , 'ADMIN'],  0x0218376128 -> ['DASKALOS', 'AUDITOR'])
     mapping(address => User) public users;
+    address[] public userAddresses;
     
 
     //MODIFIERS
@@ -79,6 +79,7 @@ contract Main{
     constructor(){
         owner = msg.sender; //address of caller of the contract (o 1os logariasmos tou ganache)
         users[owner] = User(contractAuthor,Role.Admin);
+        userAddresses.push(owner);
     }
 
 
@@ -96,12 +97,14 @@ contract Main{
     function addUser (address _userAddress, string memory _name, Role _role) public onlyRole(Role.Admin){
         require(_userAddress != address(0), "Invalid address!");
         users[_userAddress] = User(_name,_role);
+        userAddresses.push(_userAddress);
     }
 
     //delete user
     function deleteUser(address _userAddress) public onlyRole(Role.Admin){
         require(_userAddress != address(0), "Invalid address!");
         delete users[_userAddress];
+        //userAddresses.pop(_userAddress);
     }
 
     //change role of a user 
@@ -110,10 +113,11 @@ contract Main{
         users[_userAddress].role = _role;
     }
 
-
-
-
-
-
-    
+    function getAllUsers() public view returns (User[] memory){
+        User[] memory allUsers = new User[](userAddresses.length);
+        for (uint i = 0; i < userAddresses.length; i++) {
+            allUsers[i] = users[userAddresses[i]];
+        }
+        return allUsers;
+    }
 }
