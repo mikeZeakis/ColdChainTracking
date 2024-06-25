@@ -33,7 +33,7 @@ contract Main{
 
 
     struct Product{
-        uint id;
+        uint id; 
         string name;
         uint amount;
         string description;
@@ -45,7 +45,7 @@ contract Main{
     //...
 
 
-    //MPAPINGS
+    //MAPPINGS
     //nomizw 8eloume 2 mappings [na to skeftoume ligo auto)
     //ena gia ta products kai ena gia tous users 
     //
