@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
 contract Album{
 
 
     struct musicAlbum{
+        uint id;
         string artist;
         string albumTitle;
         uint tracks;
     }
+
+    mapping (uint => musicAlbum) public album;
 
     musicAlbum public currentAlbum;
     mapping (address => musicAlbum) public userAlbums;
@@ -69,7 +72,54 @@ contract Album{
 
         emit albumEvent("You have ipdated your favourite album", _artist,_albumTitle,_tracks);
     }
+    
 
+    // function myFunction(uint memory _id) public {
+    //     musicAlbum storage my_album = album[_id];
+
+    //     uint t = my_album.id;
+
+
+    // }
+
+    // struct transportationInfo{
+    //     uint id;
+    //     string origin; //
+    //     string destination; //
+    //     //dates are ints cause the are stored in the Unix timestamp format (sto front na tis metatrepsoume)
+    //     uint dateOfDeparture;
+    //     uint estDateOfArrival;
+    //     Entity currentEntity;
+    // }
+
+    // struct Product{
+    //     uint id; 
+    //     string name;
+    //     uint amount;
+    //     string description;
+    //     transportationInfo[] transInfo;
+    // }
+
+    // mapping (uint => Product) public products;
+
+    // transInfo = [transinfo1, transinfo2, transinfo3]
+    //             [ 0              1              2  ]
+
+    // length = 3
+
+    // 0 -> product1
+    // 1 -> product2
+
+    // ksjdnfkjs = product[productId].transInfo[transInfo.length - 1].currentEntity
+ 
+
+    // function trackShipment(uint productId) public view returns (Entity memory) {
+    //     require(_productId < productCount, "Product does not exist");
+
+    //     current_entity = products[_productId].TransportationInfo[TransportationInfo.length - 1].currentEntity
+    //     return current_entity;
+    // }
+    
 }
 
 

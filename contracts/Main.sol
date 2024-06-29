@@ -12,7 +12,7 @@ contract Main{
     //ENUMS
     enum Role {None, Admin, Supplier, DistributionEmployee, Auditor}
       //me thn seira poy ta vlepeis -->
-    enum EntityType {None, Producer, Transporter, Warehouse, PackagingCompany, DistributionCompany}
+    enum EntityType {None, Producer, Transporter, Warehouse, PackagingCompany, DistributionCompany, Delivered}
 
     //STRUCTS
 
@@ -27,24 +27,20 @@ contract Main{
 
     }//as valoume kialla pedia ama xreiastei
 
-    // struct transportationInfo{
-    //     uint id;
-    //     string origin; //
-    //     string destination; //
-    //     //dates are ints cause the are stored in the Unix timestamp format (sto front na tis metatrepsoume)
-    //     uint dateOfDeparture;
-    //     uint estDateOfArrival;
-    //     Entity currentEntity;
-    // }
+    struct TransportationInfo {
+        string origin;
+        string destination;
+        uint dateOfDeparture;
+        uint estDateOfArrival;
+        Entity currentEntity;
+    }
 
-    // struct Product{
-    //     uint id; 
-    //     string name;
-    //     uint amount;
-    //     string description;
-    //     transportationInfo[] transInfo;
-    // }
-
+    struct Product {
+        uint id;
+        string name;
+        uint amount;
+        string description;
+    }
 
 //START EVENTS
     //User events
@@ -54,7 +50,11 @@ contract Main{
     event EntityAdded(string description, string name, EntityType entityType);
     event EntityDeleted(string description, string name, EntityType entityType);
     //owner event
-    event OwnerChanged(string description, address currentOwner,address  newOwner);
+    event OwnerChanged(string description, address currentOwner, address newOwner);
+
+    event ProductAdded(uint indexed productId, string name);
+    event ProductUpdated(string name);
+    event ProductDeleted(string name);
 //END EVENTS
 
 //START MAPPINGS
@@ -71,6 +71,14 @@ contract Main{
     //mapping(string => uint) private nameToId;
     // Mapping to store entity IDs by type
     mapping(EntityType => string[]) private entitiesByType;
+
+    // Mapping to associate products with Transportation Info
+    mapping(uint => TransportationInfo[]) public ProdToTransInfo;
+
+    // Mapping to associate product names with product IDs
+    mapping(uint => Product) public products;
+    mapping(string => Product) private nameToProducts;
+    uint public productCount;
 
 //END MAPPINGS
     
@@ -113,6 +121,7 @@ contract Main{
         if (_type == EntityType.Warehouse) return "Warehouse";
         if (_type == EntityType.PackagingCompany) return "PackagingCompany";
         if (_type == EntityType.DistributionCompany) return "DistributionCompany";
+        if (_type == EntityType.Delivered) return "Delivered";
         revert("Invalid Type");
     }
 //END TO STRING FUNCTIONS
@@ -129,7 +138,11 @@ contract Main{
 //START ADMIN FUNCTIONS
 //START USER
     function addUser (address _userAddress, string memory _name, Role _role) public onlyRole(Role.Admin){
-        require(_userAddress != address(0), "Invalid address!");
+        require(_userAddress != address(0), "Invalid address!"); // non-0 address value 
+        require(bytes(users[_userAddress].name).length == 0 , "User already exists!"); // ensure user doesn't already exists
+        require(uint(_role) >= uint(Role.None) && uint(_role) <= uint(Role.Auditor), "Invalid role!");
+
+
         users[_userAddress] = User(_name,_role);
         userAddresses.push(_userAddress);
         string memory current_role = roleToString(_role);
@@ -140,6 +153,10 @@ contract Main{
     //delete user
     function deleteUser(address _userAddress) public onlyRole(Role.Admin){
         require(_userAddress != address(0), "Invalid address!");
+        require(bytes(users[_userAddress].name).length != 0, "User doesn't exist!");
+
+        //require(users[_userAddress].role != Role.None, "hmm"); nomizw den xreiazetai auto...
+
         string memory name = users[_userAddress].name;
         string memory current_role = roleToString(users[_userAddress].role);
 
@@ -160,8 +177,11 @@ contract Main{
 
     //change role of a user 
     function setUserRole (address _userAddress, Role _role) public onlyRole(Role.Admin){
-        //TODO: handle _role value to be valid 
+        //TODO: handle _role value to be valid
+        require( uint(_role) >= uint(Role.None) && uint(_role) <= uint(Role.Auditor), "Role is not valid"); //role must be valid 
         require(_userAddress != address(0), "Invalid address");
+        require(users[_userAddress].role != _role, "Already has this role");
+
         users[_userAddress].role = _role;
     }
 
@@ -180,18 +200,18 @@ contract Main{
 //END USER
 
 //START ENTITIES
-   function addEntity(string memory name, EntityType entityType) public onlyRole(Role.Admin){
+   function addEntity(string memory _name, EntityType entityType) public onlyRole(Role.Admin){
         // Check if the entity name already exists
-        require(bytes(entities[name].name).length == 0, "Entity name already exists");
+        require(bytes(entities[_name].name).length == 0, "Entity already exists");
+        //require(uint(entityType) >= uint(EntityType.None) && uint(entityType) <= uint(EntityType.DistributionCompany), "Invalid Entity");
    
         // Add the entity to the mappings
-        entities[name] = Entity(name, entityType);
-        entitiesByType[entityType].push(name);
+        entities[_name] = Entity(_name, entityType);
+        entitiesByType[entityType].push(_name);
 
         // Emit the EntityAdded event
-        emit EntityAdded("New entity added!", name, entityType);
+        emit EntityAdded("New entity added!", _name, entityType);
     }
-
 
     // Function to delete an entity
     function deleteEntity(string memory _name) public onlyRole(Role.Admin) {
@@ -241,5 +261,102 @@ contract Main{
 //END ENTITIES
 
 //END ADMIN FUNCTIONS 
+
+//#region PRODUCT FUNCTIONS
+
+    function addProduct(string memory _name, uint _amount, string memory _description) public {
+        require(bytes(nameToProducts[_name].name).length == 0, "Product already exists!");
+        require(_amount > 0, "Give a non-zero value for amount!");
+
+        Entity memory currentEntity= Entity("", EntityType.None); //create an empty Entity for the inital transportation info 
+
+        TransportationInfo memory initialTransInfo= TransportationInfo(" ", " ", 0, 0, currentEntity); //initialize an empty transportation info
+        
+        products[productCount] = Product(productCount, _name, _amount, _description);
+        Product memory newproduct=products[productCount];
+        
+        nameToProducts[_name] = newproduct;
+        ProdToTransInfo[newproduct.id].push(initialTransInfo);
+
+        emit ProductAdded(productCount, _name);
+        productCount++;
+    }
+
+    function deleteProduct(string memory ProductName) public {
+        require(bytes(nameToProducts[ProductName].name).length != 0, "Product doesn't exist");
+        Product memory prod = nameToProducts[ProductName];
+        delete products[prod.id]; 
+        delete nameToProducts[ProductName];
+        productCount--; 
+
+        emit ProductDeleted(ProductName); 
+    }
+
+    function updateProduct(string memory name, string memory newName, uint newAmount, string memory newDescription) public{
+        require(bytes(nameToProducts[name].name).length != 0, "Product does not exist"); // product[name] has to exist to be updated
+
+        if (keccak256(bytes(name)) != keccak256(bytes(newName))) { //new name must be different than the current name
+            require(bytes(nameToProducts[newName].name).length == 0, "New product name already exists"); // new name should not already exist 
+        }
+        // amount and description how ?
+
+        Product memory product = nameToProducts[name];
+        
+        product.name= newName;
+        product.amount = newAmount;
+        product.description= newDescription;
+        products[product.id] = product;
+        nameToProducts[name] = product;
+
+        emit ProductUpdated(name);
+    }
+
+    function getProduct(string memory productName) public view returns (Product memory){
+        require(bytes(nameToProducts[productName].name).length != 0, "Product doesn't exist");
+
+        return nameToProducts[productName];
+    }
+
+    function UpdateStatus(string memory ProductName, string memory origin, string memory destination, uint dateOfDeparture, uint estDateOfArrival, string memory EntityName, EntityType entityType) public {     
+        Product memory product = nameToProducts[ProductName];
+
+        Entity memory entity= Entity(EntityName, entityType);
+        TransportationInfo memory transInfo= TransportationInfo(origin, destination, dateOfDeparture, estDateOfArrival, entity);
+        ProdToTransInfo[product.id].push(transInfo);
+    }
+
+
+    function ViewProductHistory(string memory productName) public view returns(TransportationInfo[] memory, string memory){
+        Product memory product = nameToProducts[productName];       
+
+        TransportationInfo[] memory transInfo= ProdToTransInfo[product.id];
+
+        string memory message= "";
+
+        if(transInfo[transInfo.length -1].currentEntity.entityType==EntityType.None){
+            message="Product is just initialized";
+        }
+        else if(transInfo[transInfo.length -1].currentEntity.entityType==EntityType.Producer){
+            message="Product is in the state of Production";
+        }
+        else if(transInfo[transInfo.length -1].currentEntity.entityType==EntityType.Transporter){
+            message="Product is in the state of Transportation";
+        }
+        else if(transInfo[transInfo.length -1].currentEntity.entityType==EntityType.Warehouse){
+            message="Product is in the state of Warehouse";
+        }
+        else if(transInfo[transInfo.length -1].currentEntity.entityType==EntityType.PackagingCompany){
+           message="Product is in the state of Packaging";
+        }
+        else{
+            message="Sou rxetai";
+        }
+        
+        return (transInfo,message);
+    }
+   
+//#endregion
+
+
 }
 
