@@ -12,7 +12,7 @@ contract Main{
     //ENUMS
     enum Role {None, Admin, Supplier, DistributionEmployee, Auditor}
       //me thn seira poy ta vlepeis -->
-    enum EntityType {Producer, Transporter, Warehouse, PackagingCompany, DistributionCompany}
+    enum EntityType {None, Producer, Transporter, Warehouse, PackagingCompany, DistributionCompany}
 
     //STRUCTS
 
@@ -51,8 +51,8 @@ contract Main{
     event UserAdded(string description, address indexed userAddress, string name, string role);
     event UserDeleted(string description,address indexed userAddress, string name, string role);
     //entity events    
-    event EntityAdded(string description, uint id, string name, EntityType entityType);
-    event EntityDeleted(string description, uint id, string name, EntityType entityType);
+    event EntityAdded(string description, string name, EntityType entityType);
+    event EntityDeleted(string description, string name, EntityType entityType);
     //owner event
     event OwnerChanged(string description, address currentOwner,address  newOwner);
 //END EVENTS
@@ -66,11 +66,11 @@ contract Main{
     address[] public userAddresses;
 
     // Mapping to store entities by ID
-    mapping(uint => Entity) public entities;
+    mapping(string => Entity) public entities;
     // Mapping to store entity IDs by name
-    mapping(string => uint) private nameToId;
+    //mapping(string => uint) private nameToId;
     // Mapping to store entity IDs by type
-    mapping(EntityType => uint[]) private entitiesByType;
+    mapping(EntityType => string[]) private entitiesByType;
 
 //END MAPPINGS
     
@@ -180,79 +180,63 @@ contract Main{
 //END USER
 
 //START ENTITIES
-   function addEntity(uint entityId, string memory name, EntityType entityType) public onlyRole(Role.Admin){
-        // Check if the entity ID already exists
-        require(bytes(entities[entityId].name).length == 0, "Entity ID already exists");
+   function addEntity(string memory name, EntityType entityType) public onlyRole(Role.Admin){
         // Check if the entity name already exists
-        require(nameToId[name] == 0, "Entity name already exists");
-
+        require(bytes(entities[name].name).length == 0, "Entity name already exists");
+   
         // Add the entity to the mappings
-        entities[entityId] = Entity(name, entityType);
-        nameToId[name] = entityId;
-        entitiesByType[entityType].push(entityId);
+        entities[name] = Entity(name, entityType);
+        entitiesByType[entityType].push(name);
 
-        
         // Emit the EntityAdded event
-        emit EntityAdded("New entity added!", entityId, name, entityType);
+        emit EntityAdded("New entity added!", name, entityType);
     }
 
 
     // Function to delete an entity
-    function deleteEntity(uint entityId) public onlyRole(Role.Admin) {
+    function deleteEntity(string memory _name) public onlyRole(Role.Admin) {
         // Check if the entity exists
-        require(bytes(entities[entityId].name).length != 0, "Entity does not exist");
+        require(bytes(entities[_name].name).length != 0, "Entity does not exist");
         
         // Delete the entity from the mappings
-        string memory entityName = entities[entityId].name;
-        EntityType entityType = entities[entityId].entityType;
+        string memory entityName = entities[_name].name;
+        EntityType entityType = entities[_name].entityType;
 
-        delete entities[entityId];
-        delete nameToId[entityName];
+        delete entities[_name];
 
         // Remove the entity ID from the entitiesByType array
-        uint[] storage ids = entitiesByType[entityType];
-        for (uint i = 0; i < ids.length; i++) {
-            if (ids[i] == entityId) {
-                ids[i] = ids[ids.length - 1];
-                ids.pop();
+        string[] storage names = entitiesByType[entityType];
+        for (uint i = 0; i < names.length; i++) {
+            if (keccak256(bytes(names[i])) == keccak256(bytes(entityName))) {
+                names[i] = names[names.length - 1];
+                names.pop();
                 break;
             }
         }
         
         // Emit the EntityDeleted event
-        emit EntityDeleted("Entity deleted successfully!", entityId, entityName, entities[entityId].entityType);
+        emit EntityDeleted("Entity deleted successfully!", entityName, entityType);
     }
 
-    // Function to get an entity by ID
-    function getEntityById(uint entityId) public view returns (string memory name, EntityType entityType) {
-        // Check if the entity exists
-        require(bytes(entities[entityId].name).length != 0, "Entity does not exist");
-        
-        // Return the entity's details
-        Entity storage entity = entities[entityId];
-        return (entity.name, entity.entityType);
-    }
 
      // Function to get an entity by name
-    function getEntityByName(string memory name) public view returns (uint entityId, EntityType entityType) {
-        // Check if the entity exists
-        require(nameToId[name] != 0, "Entity does not exist");
+    function getEntityByName(string memory name) public view returns (Entity memory entity) {
+       // Check if the entity exists
+        require(bytes(entities[name].name).length != 0, "Entity does not exist");
 
         // Get the entity ID
-        entityId = nameToId[name];
-        Entity storage entity = entities[entityId];
-        return (entityId, entity.entityType);
+        Entity storage _entity = entities[name];
+
+        return (_entity);
     }
 
-    // Function to get all ids entities of a specific type
-    function getEntitiesByType(EntityType entityType) public view returns (uint[] memory) {
-        return entitiesByType[entityType];
+    // Function to get all names of the entities of a specific type
+    function getEntitiesByType(EntityType entityType) public view returns (string[] memory) {
+        // Check if the entity type exists in the entitiesByType array
+        require(entitiesByType[entityType].length != 0, "Entity type does not exist");
+
+        return entitiesByType[entityType];//list of names
     }
-
-
-
-
-
 
 //END ENTITIES
 

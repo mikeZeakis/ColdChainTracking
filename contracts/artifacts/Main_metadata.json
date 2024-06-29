@@ -21,12 +21,6 @@
 					},
 					{
 						"indexed": false,
-						"internalType": "uint256",
-						"name": "id",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
 						"internalType": "string",
 						"name": "name",
 						"type": "string"
@@ -49,12 +43,6 @@
 						"internalType": "string",
 						"name": "description",
 						"type": "string"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "id",
-						"type": "uint256"
 					},
 					{
 						"indexed": false,
@@ -162,11 +150,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "entityId",
-						"type": "uint256"
-					},
-					{
 						"internalType": "string",
 						"name": "name",
 						"type": "string"
@@ -234,9 +217,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "entityId",
-						"type": "uint256"
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
 					}
 				],
 				"name": "deleteEntity",
@@ -260,9 +243,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "string",
 						"name": "",
-						"type": "uint256"
+						"type": "string"
 					}
 				],
 				"name": "entities",
@@ -317,33 +300,9 @@
 				"name": "getEntitiesByType",
 				"outputs": [
 					{
-						"internalType": "uint256[]",
+						"internalType": "string[]",
 						"name": "",
-						"type": "uint256[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "entityId",
-						"type": "uint256"
-					}
-				],
-				"name": "getEntityById",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "enum Main.EntityType",
-						"name": "entityType",
-						"type": "uint8"
+						"type": "string[]"
 					}
 				],
 				"stateMutability": "view",
@@ -360,14 +319,21 @@
 				"name": "getEntityByName",
 				"outputs": [
 					{
-						"internalType": "uint256",
-						"name": "entityId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "enum Main.EntityType",
-						"name": "entityType",
-						"type": "uint8"
+						"components": [
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "enum Main.EntityType",
+								"name": "entityType",
+								"type": "uint8"
+							}
+						],
+						"internalType": "struct Main.Entity",
+						"name": "entity",
+						"type": "tuple"
 					}
 				],
 				"stateMutability": "view",
@@ -507,11 +473,11 @@
 	},
 	"sources": {
 		"contracts/Main.sol": {
-			"keccak256": "0x0bf02e93ccd40c4ab0dc8cea4aa51f35a58346a818830bead3547d0e4117379f",
+			"keccak256": "0x9efcc31f04b0e4739aff2e87813eccb798af39af760a5b1d1d9b32fcc6d8a5f4",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://8b364868a66a6cc5f841f421d6b0afda8021164849382f4a8237d0473b069494",
-				"dweb:/ipfs/QmbWpSxb5TEhNe1xpr3USENyNEux7wd7GtxjzRYzHL3SqL"
+				"bzz-raw://36bf4365c4da98e5daf48d483532a6b9e504465bcb63f60a7a4d863c34359304",
+				"dweb:/ipfs/Qmav4dWhMQ3nxKQVHS2oxT5RK4aQaacXHC68KEjSJ9fKuz"
 			]
 		}
 	},
