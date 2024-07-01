@@ -2,6 +2,12 @@
 
 pragma solidity ^0.8.0;
 
+//TODO: require se ola na ta ksana dw view history/update status
+//TODO: date of depart < date of arrival
+//TODO: merge location code 
+//TODO: merge new update product
+//TODO: 
+
 contract Main{
 
     //GLOBAL VARS OF THE CONTRACT
@@ -298,6 +304,9 @@ contract Main{
         if (keccak256(bytes(name)) != keccak256(bytes(newName))) { //new name must be different than the current name
             require(bytes(nameToProducts[newName].name).length == 0, "New product name already exists"); // new name should not already exist 
         }
+
+        require(newAmount > 0, "Give a non zero amount!");
+
         // amount and description how ?
 
         Product memory product = nameToProducts[name];
@@ -305,6 +314,7 @@ contract Main{
         product.name= newName;
         product.amount = newAmount;
         product.description= newDescription;
+
         products[product.id] = product;
         nameToProducts[name] = product;
 
@@ -353,6 +363,12 @@ contract Main{
         }
         
         return (transInfo,message);
+    }
+
+    function getAmount(uint _productId) public view returns (uint){
+        require(_productId < productCount, "Product does not exist");
+        Product memory product = products[_productId];
+        return product.amount;
     }
    
 //#endregion

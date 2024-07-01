@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.7.6+commit.7338295f"
+		"version": "0.8.19+commit.7dd6d404"
 	},
 	"language": "Solidity",
 	"output": {
@@ -55,6 +55,40 @@
 				"type": "event"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "album",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "artist",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "albumTitle",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tracks",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "contractAuthor",
 				"outputs": [
@@ -71,6 +105,11 @@
 				"inputs": [],
 				"name": "currentAlbum",
 				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
 					{
 						"internalType": "string",
 						"name": "artist",
@@ -193,6 +232,11 @@
 				"name": "userAlbums",
 				"outputs": [
 					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
 						"internalType": "string",
 						"name": "artist",
 						"type": "string"
@@ -225,26 +269,26 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/testContractAlbum.sol": "Album"
+			"contracts/Album.sol": "Album"
 		},
-		"evmVersion": "istanbul",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
-			"runs": 200
+			"enabled": true,
+			"runs": 201
 		},
 		"remappings": []
 	},
 	"sources": {
-		"contracts/testContractAlbum.sol": {
-			"keccak256": "0x7a39cf8f6cd0ecde2ed30e44aad35abd862d1b10070f50230669f94d65c60187",
+		"contracts/Album.sol": {
+			"keccak256": "0x3a311747fe789d328fb4ab8c6b763c0833a53212c609f4848b36c0220207e641",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://dfc7dcaa241017f79e199c39684785351b97287a98dc84843e78fbcbff1ba043",
-				"dweb:/ipfs/Qma4oaXuY5b1emc4w2m8T3LGsS7ry1caagmwagmRBqJLBC"
+				"bzz-raw://aea88f5dc007381e2f78ffd3999b86592359c811da4659296a5d995451b7187c",
+				"dweb:/ipfs/QmVaMrxFWWDzvBCeSeDSm8NfoUgCKdJBBvMUtKQazKzAg1"
 			]
 		}
 	},

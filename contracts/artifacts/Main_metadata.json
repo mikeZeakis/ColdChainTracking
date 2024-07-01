@@ -535,6 +535,25 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "_productId",
+						"type": "uint256"
+					}
+				],
+				"name": "getAmount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "enum Main.EntityType",
 						"name": "entityType",
 						"type": "uint8"
@@ -825,18 +844,18 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
-			"runs": 200
+			"enabled": true,
+			"runs": 201
 		},
 		"remappings": []
 	},
 	"sources": {
 		"contracts/Main.sol": {
-			"keccak256": "0xf3153396f9a48de8557446cbf66192b5e04b06137fd5bd494279f5f142c02855",
+			"keccak256": "0x3ed1066f87e347f7df741e6cf8d4df7131ba487743db43713403ecbdfc2e4b7c",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://8070b09d86e41d4315be5a2dc96a2bd05da902863bcd2b12954c6bbcb2c2f4fd",
-				"dweb:/ipfs/QmX4WEfMFuqRHkvSH2pYVnZ2azPKJc8hWin6sePtLSNJQq"
+				"bzz-raw://56b6bdf3c66018099537292aeeb6ae0f118a5886295c0f6522ee37bf2901a3e9",
+				"dweb:/ipfs/QmTmyVYRipTwkR57rzWXFNmUKBSNgCCb67Ja5n1EgQtg39"
 			]
 		}
 	},
